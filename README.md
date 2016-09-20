@@ -1,2 +1,2 @@
 # PHP-Weather-Scraper
-A PHP project, A user enters a city, A GET request is then sent to the PHP script, so that the PHP can pull the relevant weather data and display it to the user.
+A PHP project, a user enters a city into the input box, a GET request is then sent to a PHP script. The PHP script then pulls the relevant weather data from a target URL which is then displayed to the user. This project may seem relatively simple as a PHP project but I think it shows that I can work well with HTML and PHP
