@@ -2,25 +2,27 @@
 	$message ="";
 	
 	
-if($_GET["userInput"]){
-	$_GET["userInput"] = str_replace(' ','',$_GET["userInput"]);
+	if($_GET["userInput"]) {
+		
+		$_GET["userInput"] = str_replace(' ','',$_GET["userInput"]); // remove any spaces
 		$url = 'http://www.weather-forecast.com/locations/'.$_GET["userInput"].'/forecasts/latest';
-		$regex = '#<p class="summary">(.*?)</p>#';
-		$page = file_get_contents($url);
+		$regex = '#<p class="summary">(.*?)</p>#'; /* extract weather data from target website, realistically this would be inpractical 
+		in a real website, because if the target website's source code changed then this would excract the wrong information but this 
+		method was used for example purposes*/
+		$page = file_get_contents($url); 
+
+		if($page) {
+			
+			 preg_match($regex, $page, $matches); // match data
+			 $message.='<div class="alert alert-info style=color:black;">.'.$matches[0].'</div>'; 
+		 
+		 } else{
+		 	
+		 	$message.='<div class="alert alert-danger style=color:red;">This request has failed please make sure you\'ve entered a valid city name or try again later.</div>';
+		 }
 
 	
-
-	if($page){
-	 preg_match($regex, $page, $matches);
-	 $message.='<div class="alert alert-info style=color:black;">.'.$matches[0].'</div>'; 
 	 }
-
-	 else{
-	 	$message.='<div class="alert alert-danger style=color:red;">This request has failed please make sure you\'ve entered a valid city name or try again later.</div>';
-	 }
-
-	
-	}
 
 
 		
@@ -47,37 +49,48 @@ if($_GET["userInput"]){
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <style>
-	h1{
+
+	body 	{ 						
+              
+                background: url(sunrise.jpg) no-repeat center center fixed; /*provide a centered full-width background for homepage*/
+	       -webkit-background-size: cover;
+	       -moz-background-size: cover;
+	       -o-background-size: cover;
+	        background-size: cover;
+	}
+	
+	h1 {
 		margin-top:150px;
 		font-size: 3.5em; 
 		color: white;
 
 	}
-	p{
+	
+	p {
 		margin-bottom: 15px;
 		color: black;
 
 	}
-	#text-box{
+	
+	#text-box {
+		
 		width: 500px;
 		margin: auto;
 	}
-	#submitBtn{
+	
+	#submitBtn {
+		
 		margin-top: 15px;
 	}
-	#message{
+	
+	#message {
+		
 		width:500px;
 		margin: auto;
 	}
-	body{
 	
-     background: url(sunrise.jpg) no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-	}
-	#submitBtn{
+	#submitBtn {
+		
 		margin-bottom: 15px;
 	}
 
@@ -91,14 +104,16 @@ if($_GET["userInput"]){
 		<div class="row">
 			<div class="col-xs-12">
 				<h1>What's the Weather?</h1>
+				
 				<p>Enter the name of a city</p>
+				
 				<form method="get">
 					<div class="form-group">
 						<input type="text" class="form-control" name="userInput" id="text-box" placeholder="Eg. London, Tokyo">
 					</div>
 					<button type="submit" id="submitBtn" class="btn btn-primary">Submit</button>
 				</form>
-					<div class="text-center" id="message"><?php echo $message; ?></div>
+					<div class="text-center" id="message"><?php echo $message; ?></div> <!--use PHP variable to render message-->
 			</div>
 		</div>
 	</div>
