@@ -7,7 +7,7 @@
 		$_GET["userInput"] = str_replace(' ','',$_GET["userInput"]); // remove any spaces
 		$url = 'http://www.weather-forecast.com/locations/'.$_GET["userInput"].'/forecasts/latest';
 		$regex = '#<p class="summary">(.*?)</p>#'; /* extract weather data from target website, realistically this would be inpractical 
-		in a real website, because if the target website's source code changed then this would excract the wrong information but this 
+		in a real website, because if the target website's source code changed then this would extract the wrong information but this 
 		method was used for example purposes*/
 		$page = file_get_contents($url); 
 
